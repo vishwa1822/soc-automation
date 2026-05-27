@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import { API_BASE } from "../apiBase"
 import HoneytokenPanel from "../components/HoneytokenPanel"
 import IpLocator from "../components/IpLocator"
 import PageHeader from "../components/PageHeader"
@@ -9,7 +10,8 @@ export default function Visualization({ onToggleSidebar, isSidebarOpen }) {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/alerts")
+        const res = await fetch(`${API_BASE}/alerts`)
+        if (!res.ok) return
         const data = await res.json()
         setAlerts(Array.isArray(data.alerts) ? data.alerts : [])
       } catch {

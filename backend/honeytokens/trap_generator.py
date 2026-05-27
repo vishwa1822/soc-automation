@@ -79,3 +79,8 @@ password={token}
         tokens.append(token)
 
     return traps, tokens
+
+
+def generate_traps(count=5):
+    """Endpoint path list for RotationScheduler / TrapRegistry."""
+    return generate_endpoint_traps(count)

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { API_BASE } from "../apiBase"
 
 export default function AIChat({ className = "" }) {
   const [query, setQuery] = useState("")
@@ -10,7 +11,7 @@ export default function AIChat({ className = "" }) {
     setLoading(true)
     setResponse(null)
     try {
-      const res = await fetch("http://127.0.0.1:8000/ask-soc", {
+      const res = await fetch(`${API_BASE}/ask-soc`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query })
@@ -44,7 +45,7 @@ export default function AIChat({ className = "" }) {
         }}
       />
 
-      <button className="ai-button" disabled={loading} onClick={askAI}>
+      <button type="button" className="ai-button" disabled={loading} onClick={askAI}>
         {loading ? "Asking..." : "Ask AI"}
       </button>
 

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { API_BASE } from "../apiBase"
 
 export default function IpLocator({ className = "" }) {
 
@@ -11,7 +12,7 @@ export default function IpLocator({ className = "" }) {
     setLoading(true)
     setResult(null)
     try {
-      const res = await fetch("http://127.0.0.1:8000/ip-lookup", {
+      const res = await fetch(`${API_BASE}/ip-lookup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -57,6 +58,7 @@ export default function IpLocator({ className = "" }) {
           }}
         />
         <button
+          type="button"
           className="ai-button"
           style={{ whiteSpace: "nowrap" }}
           disabled={loading}

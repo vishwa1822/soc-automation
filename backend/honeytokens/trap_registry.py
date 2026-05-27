@@ -22,3 +22,8 @@ class TrapRegistry:
 
         with self._lock:
             return list(self.active_traps)
+
+    def get_endpoint_traps(self):
+        """URL paths registered as honeytoken endpoints (used by victim app sync)."""
+
+        return self.get_active_traps()

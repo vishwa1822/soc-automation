@@ -1,0 +1,24 @@
+{
+  "name": "soc-project",
+  "private": true,
+  "description": "From repo root: npm run go (one command: install deps + SOC API + dashboard)",
+  "scripts": {
+    "postinstall": "npm install --prefix frontend",
+    "setup": "python -m pip install -r backend/requirements.txt",
+    "dev": "concurrently -k -n api,ui -c blue,magenta \"npm run dev:api\" \"npm run dev:ui\"",
+    "dev:api": "cd backend && python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000",
+    "dev:api:static": "cd backend && cross-env SOC_SERVE_FRONTEND=1 python -m uvicorn main:app --host 127.0.0.1 --port 8000",
+    "dev:ui": "cd frontend && npm run dev",
+    "start": "npm run dev",
+    "go": "npm install && npm run setup && npm run dev",
+    "dev:full": "concurrently -k -n api,ui,victim,victim-ui -c blue,magenta,yellow,cyan \"npm run dev:api\" \"npm run dev:ui\" \"npm run dev:victim\" \"npm run dev:victim-ui\"",
+    "dev:victim": "cd victim_app && python -m uvicorn app:app --reload --host 127.0.0.1 --port 8080",
+    "dev:victim-ui": "cd victim_app/frontend && npm run dev",
+    "go:full": "npm install && npm run setup && npm run setup:victim && npm run dev:full",
+    "setup:victim": "python -m pip install fastapi uvicorn requests && npm install --prefix victim_app/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3"
+  }
+}

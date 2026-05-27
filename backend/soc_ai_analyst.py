@@ -10,7 +10,7 @@ class SOCAIAnalyst:
 
         self.rag = RAGEngine()
 
-	self.memory = SOCMemoryEngine()
+        self.memory = SOCMemoryEngine()
     # --------------------------------
     # Format Logs for LLM Context
     # --------------------------------

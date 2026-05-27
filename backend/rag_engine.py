@@ -1,26 +1,26 @@
-import faiss
-import numpy as np
-from sentence_transformers import SentenceTransformer
+"""RAG over indexed logs. Heavy deps (faiss, sentence-transformers) load only on first use."""
+
+from __future__ import annotations
+
+from typing import Any
 
 
 class RAGEngine:
 
-    def __init__(self):
+    def __init__(self) -> None:
+        import faiss
+        import numpy as np
+        from sentence_transformers import SentenceTransformer
 
-        # Load embedding model
+        self._faiss = faiss
+        self._np = np
+
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
-
-        # FAISS index
         self.dimension = 384
         self.index = faiss.IndexFlatL2(self.dimension)
+        self.metadata: list[Any] = []
 
-        # metadata store
-        self.metadata = []
-
-    # -------------------------
-    # Convert log to text
-    # -------------------------
-    def log_to_text(self, log):
+    def log_to_text(self, log: Any) -> str:
 
         text = f"""
         user {log.user_id}
@@ -32,40 +32,31 @@ class RAGEngine:
 
         return text
 
-    # -------------------------
-    # Generate embedding
-    # -------------------------
-    def generate_embedding(self, text):
+    def generate_embedding(self, text: str):
 
         vector = self.model.encode(text)
 
         return vector
 
-    # -------------------------
-    # Index log into vector DB
-    # -------------------------
-    def index_log(self, log):
+    def index_log(self, log: Any) -> None:
 
         text = self.log_to_text(log)
 
         vector = self.generate_embedding(text)
 
-        vector = np.array([vector]).astype("float32")
+        vector = self._np.array([vector]).astype("float32")
 
         self.index.add(vector)
 
         self.metadata.append(log)
 
-    # -------------------------
-    # Semantic search
-    # -------------------------
-    def search(self, query, k=5):
+    def search(self, query: str, k: int = 5):
 
         query_vector = self.model.encode(query)
 
-        query_vector = np.array([query_vector]).astype("float32")
+        query_vector = self._np.array([query_vector]).astype("float32")
 
-        distances, indices = self.index.search(query_vector, k)
+        _distances, indices = self.index.search(query_vector, k)
 
         results = []
 

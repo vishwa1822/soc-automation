@@ -18,29 +18,35 @@ class IPLookup(BaseModel):
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-soc_analyst = SOCAIAnalyst(api_key=OPENAI_API_KEY)
+soc_analyst = None
+
+def get_soc_analyst():
+    global soc_analyst
+    if soc_analyst is None:
+        if not OPENAI_API_KEY:
+            raise HTTPException(status_code=500, detail="OPENAI_API_KEY is not configured")
+        soc_analyst = SOCAIAnalyst(api_key=OPENAI_API_KEY)
+    return soc_analyst
 
 
 @router.post("/ask-soc")
 async def ask_soc(query: SOCQuery):
 
-  try:
+    try:
+        result = get_soc_analyst().investigate(query.query)
 
-    result = soc_analyst.investigate(query.query)
+        return {
+            "status": "success",
+            "query": result["query"],
+            "logs_used": result["logs_used"],
+            "analysis": result["analysis"],
+        }
 
-    return {
-      "status": "success",
-      "query": result["query"],
-      "logs_used": result["logs_used"],
-      "analysis": result["analysis"],
-    }
-
-  except Exception as e:
-
-    raise HTTPException(
-      status_code=500,
-      detail=f"SOC investigation failed: {str(e)}",
-    )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"SOC investigation failed: {str(e)}",
+        )
 
 
 @router.post("/ip-lookup")

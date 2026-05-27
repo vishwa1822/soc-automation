@@ -1,0 +1,165 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #1a1a24;
+  background: #f4f2fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+code {
+  font-size: 0.9em;
+  background: rgba(100, 80, 180, 0.12);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.va-root {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+.va-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.55rem;
+}
+
+.va-lead {
+  margin: 0;
+  color: #4b4f63;
+  line-height: 1.5;
+}
+
+.va-card {
+  margin-top: 18px;
+  padding: 18px 18px 20px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(80, 60, 140, 0.15);
+  box-shadow: 0 8px 22px rgba(40, 30, 80, 0.06);
+}
+
+.va-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.va-muted {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: #5c6074;
+}
+
+.va-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.va-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3a3d4d;
+}
+
+.va-field--wide {
+  grid-column: 1 / -1;
+}
+
+.va-field input {
+  font: inherit;
+  font-weight: 500;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(80, 60, 140, 0.22);
+  background: #faf9ff;
+}
+
+.va-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.va-json {
+  width: 100%;
+  min-height: 200px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.82rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(80, 60, 140, 0.22);
+  margin-bottom: 10px;
+  resize: vertical;
+}
+
+.va-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  background: linear-gradient(120deg, #5b47c9, #8b4fc4);
+}
+
+.va-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.va-btn--ghost {
+  color: #4a38a8;
+  background: rgba(90, 70, 200, 0.1);
+  border: 1px solid rgba(90, 70, 200, 0.25);
+}
+
+.va-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.va-pre {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #f0eef8;
+  border: 1px solid rgba(80, 60, 140, 0.12);
+  font-size: 0.8rem;
+  overflow: auto;
+  max-height: 360px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.va-pre--err {
+  background: #fff0f0;
+  border-color: rgba(200, 60, 60, 0.25);
+  color: #7a1e1e;
+}
+
+@media (max-width: 640px) {
+  .va-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .va-field--wide {
+    grid-column: auto;
+  }
+}

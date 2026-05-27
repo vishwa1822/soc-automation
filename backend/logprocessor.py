@@ -1,6 +1,7 @@
 from honeytokens.engine_instance import honeytoken_engine
 from network_detection.enumeration_detector import EnumerationDetector
 
+from alert_store import record_alert
 from riskengine import RiskEngine
 from alert_engine import AlertEngine
 from timeline_engine import TimelineEngine
@@ -59,6 +60,8 @@ class LogProcessor:
         )
 
         results["alert"] = alert
+
+        record_alert(alert)
 
         # -----------------------------
         # Timeline Tracking

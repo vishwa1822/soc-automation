@@ -1,19 +1,27 @@
 import requests
 import datetime
 
-SOC_LOG_API = "http://localhost:8000/api/logs"
+from config import SOC_API_KEY, SOC_API_URL, SOURCE_NAME
 
 
 def send_log(event_type, resource, ip):
 
     log = {
-        "timestamp": str(datetime.datetime.utcnow()),
-        "event_type": event_type,
-        "resource": resource,
-        "ip": ip
+        "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
+        "source": SOURCE_NAME,
+        "ip": ip,
+        "endpoint": resource,
+        "method": "GET",
+        "status": 200,
+        "user_agent": f"victim-background ({event_type})",
     }
 
     try:
-        requests.post(SOC_LOG_API, json=log)
+        requests.post(
+            SOC_API_URL,
+            json=log,
+            headers={"Authorization": f"Bearer {SOC_API_KEY}"},
+            timeout=2,
+        )
     except Exception:
         pass

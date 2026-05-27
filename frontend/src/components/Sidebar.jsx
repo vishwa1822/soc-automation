@@ -22,7 +22,7 @@ export default function Sidebar({ isOpen = true, onClose }) {
 
       <ul className="sidebar-menu">
         <li>
-          <NavLink to="/workspace" className={linkClass}>
+          <NavLink to="/home" className={linkClass}>
             Home
           </NavLink>
         </li>
@@ -39,7 +39,6 @@ export default function Sidebar({ isOpen = true, onClose }) {
         <li>
           <NavLink to="/soar" className={linkClass}>
             SOAR
-            <span className="sidebar-badge">&nbsp;future</span>
           </NavLink>
         </li>
       </ul>

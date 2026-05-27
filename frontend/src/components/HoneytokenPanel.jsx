@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { API_BASE } from "../apiBase"
 
 export default function HoneytokenPanel({ className = "" }) {
 
@@ -9,15 +10,18 @@ export default function HoneytokenPanel({ className = "" }) {
   const fetchData = async () => {
     try {
       const [statusRes, triggerRes] = await Promise.all([
-        fetch("http://127.0.0.1:8000/honeytokens/status"),
-        fetch("http://127.0.0.1:8000/honeytokens/triggers")
+        fetch(`${API_BASE}/honeytokens/status`),
+        fetch(`${API_BASE}/honeytokens/triggers`)
       ])
 
-      const statusJson = await statusRes.json()
-      const triggerJson = await triggerRes.json()
-
-      setStatus(statusJson)
-      setTriggers(Array.isArray(triggerJson.triggers) ? triggerJson.triggers.slice(-5).reverse() : [])
+      if (statusRes.ok) {
+        const statusJson = await statusRes.json()
+        setStatus(statusJson)
+      }
+      if (triggerRes.ok) {
+        const triggerJson = await triggerRes.json()
+        setTriggers(Array.isArray(triggerJson.triggers) ? triggerJson.triggers.slice(-5).reverse() : [])
+      }
     } catch {
       // swallow network errors for dashboard
     }
@@ -36,8 +40,8 @@ export default function HoneytokenPanel({ className = "" }) {
     setToggling(true)
     try {
       const endpoint = target === "enable"
-        ? "http://127.0.0.1:8000/honeytokens/enable"
-        : "http://127.0.0.1:8000/honeytokens/disable"
+        ? `${API_BASE}/honeytokens/enable`
+        : `${API_BASE}/honeytokens/disable`
       await fetch(endpoint, { method: "POST" })
       await fetchData()
     } catch {
@@ -80,6 +84,7 @@ export default function HoneytokenPanel({ className = "" }) {
 
         <div style={{ marginLeft: "auto", display: "flex", gap: "8px" }}>
           <button
+            type="button"
             className="ai-button"
             style={{ padding: "7px 12px" }}
             disabled={toggling || enabled}
@@ -88,6 +93,7 @@ export default function HoneytokenPanel({ className = "" }) {
             Enable
           </button>
           <button
+            type="button"
             className="ai-button"
             style={{ padding: "7px 12px", background: "transparent", color: "var(--rb)", border: "1px solid rgba(64,93,230,0.35)" }}
             disabled={toggling || !enabled}

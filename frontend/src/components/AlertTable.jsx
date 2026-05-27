@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { API_BASE } from "../apiBase"
 
 export default function AlertTable({ className = "" }) {
   const [alerts, setAlerts] = useState([])
@@ -6,7 +7,8 @@ export default function AlertTable({ className = "" }) {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/alerts")
+        const res = await fetch(`${API_BASE}/alerts`)
+        if (!res.ok) return
         const data = await res.json()
         const list = Array.isArray(data.alerts) ? data.alerts : []
         setAlerts(list.slice(-4).reverse())

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { API_BASE } from "../apiBase"
 import HoneytokenPanel from "../components/HoneytokenPanel"
 import AlertTable from "../components/AlertTable"
 import AIChat from "../components/AIChat"
@@ -32,7 +33,8 @@ function InlineRiskCard({ className = "" }) {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/system-status")
+        const res = await fetch(`${API_BASE}/system-status`)
+        if (!res.ok) return
         const data = await res.json()
         setStatus(data)
       } catch {
