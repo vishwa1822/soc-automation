@@ -178,6 +178,5 @@ python app.py
 ---
 
 ## 👨‍💻 Author
-
-Vishwa Vishwa
+Vishwa
 Cybersecurity & AI Enthusiast
