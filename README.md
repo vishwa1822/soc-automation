@@ -180,4 +180,4 @@ python app.py
 ## 👨‍💻 Author
 
 Vishwa Vishwa
-Cybersecuruty & AI Enthusiast
+Cybersecurity & AI Enthusiast
